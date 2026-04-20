@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phanupong Boonyasiwapong — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #080c10;
+    --bg2:      #0d1117;
+    --bg3:      #161b22;
+    --bg4:      #21262d;
+    --border:   #30363d;
+    --border2:  #444c56;
+    --green:    #3fb950;
+    --green2:   #26a641;
+    --blue:     #79c0ff;
+    --purple:   #d2a8ff;
+    --yellow:   #e3b341;
+    --red:      #f85149;
+    --text:     #e6edf3;
+    --muted:    #8b949e;
+    --faint:    #484f58;
+    --mono:     'JetBrains Mono', monospace;
+    --sans:     'Syne', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(63,185,80,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(63,185,80,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  .header {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg2);
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+  }
+  .header-inner { display: flex; gap: 2rem; align-items: flex-start; }
+  .avatar-wrap { flex-shrink: 0; }
+  .avatar {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--bg3);
+    border: 2px solid var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); font-size: 26px; font-weight: 800;
+    color: var(--green);
+    position: relative;
+  }
+  .avatar-ring {
+    position: absolute; inset: -6px; border-radius: 50%;
+    border: 1px dashed var(--border2);
+    animation: spin 20s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .header-text { flex: 1; }
+  .header-name {
+    font-family: var(--sans);
+    font-size: 28px; font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    margin-bottom: 2px;
+  }
+  .header-role {
+    font-size: 13px; color: var(--blue);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .header-role .prompt { color: var(--green); }
+  .status-dot {
+    display: inline-block; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+    margin-right: 4px;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .chip {
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+    border: 1px solid var(--border); color: var(--muted); background: var(--bg3);
+  }
+  .chip.green { border-color: var(--green); color: var(--green); }
+  .chip.blue  { border-color: var(--blue);  color: var(--blue);  }
+  .chip.yellow{ border-color: var(--yellow);color: var(--yellow);}
+
+  .header-bio { font-size: 12px; color: var(--muted); line-height: 1.7; max-width: 580px; }
+
+  .header-right { text-align: right; }
+  .avail-block { background: var(--bg3); border: 1px solid var(--green); border-radius: 8px; padding: 10px 14px; display: inline-block; }
+  .avail-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .avail-val { font-size: 12px; color: var(--green); }
+
+  /* ── GRID ── */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .col-full { grid-column: 1 / -1; }
+
+  /* ── SECTION ── */
+  .section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; }
+  .sec-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-icon { font-size: 14px; }
+  .sec-title { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); }
+  .sec-count { margin-left: auto; font-size: 10px; color: var(--faint); }
+
+  /* ── EXPERIENCE ── */
+  .exp { margin-bottom: 1.4rem; padding-bottom: 1.4rem; border-bottom: 1px dashed var(--border); }
+  .exp:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 3px; }
+  .exp-role { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--blue); }
+  .exp-date { font-size: 10px; color: var(--muted); white-space: nowrap; }
+  .exp-company { font-size: 11px; color: var(--purple); margin-bottom: 8px; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 12px; color: var(--muted); line-height: 1.6; padding-left: 16px; position: relative; margin-bottom: 3px; }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 10px; top: 2px; }
+
+  /* ── SKILLS ── */
+  .skill-cats { display: flex; flex-direction: column; gap: 14px; }
+  .skill-cat-label { font-size: 10px; color: var(--faint); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stag {
+    font-size: 11px; padding: 3px 10px; border-radius: 4px;
+    background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+  }
+  .stag.primary { border-color: var(--blue); color: var(--blue); background: rgba(121,192,255,0.07); }
+  .stag.secondary { border-color: var(--purple); color: var(--purple); background: rgba(210,168,255,0.07); }
+  .stag.tool { border-color: var(--border2); color: var(--muted); }
+
+  /* ── EDUCATION ── */
+  .edu-logo { width: 42px; height: 42px; border-radius: 8px; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--yellow); flex-shrink: 0; }
+  .edu-row { display: flex; gap: 14px; align-items: flex-start; }
+  .edu-deg { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--text); }
+  .edu-school { font-size: 12px; color: var(--blue); }
+  .edu-year { font-size: 11px; color: var(--muted); }
+
+  /* ── PROJECTS ── */
+  .proj { padding-bottom: 1.2rem; margin-bottom: 1.2rem; border-bottom: 1px dashed var(--border); }
+  .proj:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .proj-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .proj-name { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .award-badge { font-size: 10px; background: rgba(227,179,65,0.12); border: 1px solid var(--yellow); color: var(--yellow); padding: 2px 8px; border-radius: 12px; white-space: nowrap; }
+  .proj-desc { font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+  .proj-stack { display: flex; gap: 5px; flex-wrap: wrap; }
+  .ptag { font-size: 10px; padding: 2px 7px; border-radius: 3px; background: var(--bg3); border: 1px solid var(--border); color: var(--purple); }
+
+  /* ── STATS ── */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px; text-align: center; }
+  .stat-val { font-family: var(--sans); font-size: 22px; font-weight: 800; color: var(--text); display: block; }
+  .stat-val.green { color: var(--green); }
+  .stat-val.blue  { color: var(--blue); }
+  .stat-val.purple{ color: var(--purple); }
+  .stat-label { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; }
+
+  /* ── CONTACT ── */
+  .contact-list { display: flex; flex-direction: column; gap: 10px; }
+  .contact-row { display: flex; align-items: center; gap: 12px; }
+  .contact-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); flex-shrink: 0; }
+  .contact-val { font-size: 12px; color: var(--text); }
+  .contact-label { font-size: 10px; color: var(--faint); }
+
+  /* ── AVAILABILITY BLOCK ── */
+  .avail-section { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 1.75rem; }
+  .avail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .avail-item { background: var(--bg3); border-radius: 8px; padding: 12px 14px; }
+  .avail-item-label { font-size: 10px; color: var(--faint); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+  .avail-item-val { font-size: 12px; color: var(--text); }
+  .avail-item-val.green { color: var(--green); }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; margin-top: 2rem; font-size: 11px; color: var(--faint); }
+  .footer span { color: var(--green); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="avatar-wrap">
+        <div class="avatar">
+          PB
+          <div class="avatar-ring"></div>
+        </div>
+      </div>
+      <div class="header-text">
+        <div class="header-name">Phanupong Boonyasiwapong</div>
+        <div class="header-role">
+          <span class="prompt">$</span>
+          Associate Software Engineer @ SCB
+          &nbsp;·&nbsp;
+          <span class="status-dot"></span>Open to opportunities
+        </div>
+        <div class="meta-row">
+          <span class="chip green">Available in 30 days</span>
+          <span class="chip blue">Backend / Full-Stack</span>
+          <span class="chip">Bangkok, Thailand</span>
+          <span class="chip">2 yrs + experience</span>
+        </div>
+        <div class="header-bio">
+          Backend-focused software engineer with experience building production-grade microservices and REST APIs for financial systems at SCB. Passionate about system architecture, automation, and applying AI to real-world problems.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS ROW -->
+  <div class="stats-row" style="margin-bottom: 1.5rem;">
+    <div class="stat-card">
+      <span class="stat-val green">2+</span>
+      <div class="stat-label">years professional exp</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val blue">3rd</span>
+      <div class="stat-label">NSC 2023 national ranking</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-val purple">TU</span>
+      <div class="stat-label">B.Sc. Computer Science</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE + SKILLS -->
+  <div class="grid">
+    <div class="section col-full">
+      <div class="sec-head">
+        <span class="sec-icon">💼</span>
+        <span class="sec-title">Experience</span>
+      </div>
+
+      <div class="exp">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Associate Software Engineer</div>
+            <div class="exp-company">@ Siam Commercial Bank (SCB)</div>
+          </div>
+          <div class="exp-date">Jan 2024 — Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Developed and maintained Backend Services & REST APIs using <strong style="color:var(--text)">Java Spring Boot</strong> for core banking systems</li>
+          <li>Designed and operated <strong style="color:var(--text)">Microservices architecture</strong> supporting telesales and branch-facing financial workflows</li>
+          <li>Built <strong style="color:var(--text)">Python automation tools</strong> and data analysis pipelines to analyze customer data and support business teams</li>
+          <li>Led system architecture and backend for an internal <strong style="color:var(--text)">automation workflow engine</strong> (n8n-like), coordinating with PM and handing off requirements to frontend team</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-icon">⚡</span>
+        <span class="sec-title">Tech Stack</span>
+      </div>
+      <div class="skill-cats">
+        <div>
+          <div class="skill-cat-label">Primary</div>
+          <div class="skill-tags">
+            <span class="stag primary">Java</span>
+            <span class="stag primary">Spring Boot</span>
+            <span class="stag primary">Python</span>
+            <span class="stag primary">REST API</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cat-label">Architecture</div>
+          <div class="skill-tags">
+            <span class="stag secondary">Microservices</span>
+            <span class="stag secondary">System Design</span>
+            <span class="stag secondary">Workflow Automation</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cat-label">Data & Tools</div>
+          <div class="skill-tags">
+            <span class="stag tool">Data Analysis</span>
+            <span class="stag tool">SQL</span>
+            <span class="stag tool">Git</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cat-label">Familiar With</div>
+          <div class="skill-tags">
+            <span class="stag">AI/ML</span>
+            <span class="stag">Mobile Dev</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-icon">🎓</span>
+        <span class="sec-title">Education</span>
+      </div>
+      <div class="edu-row">
+        <div class="edu-logo">TU</div>
+        <div>
+          <div class="edu-deg">B.Sc. Computer Science</div>
+          <div class="edu-school">Thammasat University</div>
+          <div class="edu-year">Graduated 2023</div>
+        </div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-logo">TU</div>
+        <div>
+          <div class="edu-deg">B.Sc. Computer Science</div>
+          <div class="edu-school">Thammasat University</div>
+          <div class="edu-year">Graduated 2023</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section" style="margin-bottom: 1.5rem;">
+    <div class="sec-head">
+      <span class="sec-icon">🚀</span>
+      <span class="sec-title">Notable Projects</span>
+    </div>
+
+    <div class="proj">
+      <div class="proj-header">
+        <div class="proj-name">AI Skin Disease Diagnosis Mobile App</div>
+        <span class="award-badge">🏆 3rd Place · NSC 2023 National</span>
+      </div>
+      <div class="proj-desc">
+        Mobile application using a local on-device AI model for skin disease analysis from photos — designed for clinics and remote areas with limited connectivity. Supports patient history tracking and follow-up, built to assist physician diagnosis.
+      </div>
+      <div class="proj-stack">
+        <span class="ptag">AI / Local Model</span>
+        <span class="ptag">Mobile</span>
+        <span class="ptag">Image Classification</span>
+        <span class="ptag">Offline-first</span>
+        <span class="ptag">Healthcare</span>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-header">
+        <div class="proj-name">Internal Workflow Automation Engine</div>
+      </div>
+      <div class="proj-desc">
+        Designed and built a workflow orchestration system (similar to n8n) for automating business processes at SCB. Owned full system architecture and backend; collaborated with PM from design phase through to frontend handoff.
+      </div>
+      <div class="proj-stack">
+        <span class="ptag">Java Spring Boot</span>
+        <span class="ptag">System Architecture</span>
+        <span class="ptag">Workflow Engine</span>
+        <span class="ptag">Banking</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVAILABILITY + CONTACT -->
+  <div class="grid">
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-icon">📡</span>
+        <span class="sec-title">Contact</span>
+      </div>
+      <div class="contact-list">
+        <div class="contact-row">
+          <div class="contact-icon">@</div>
+          <div>
+            <div class="contact-val">phanupong.forwork@gmail.com</div>
+            <div class="contact-label">Email</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">gh</div>
+          <div>
+            <div class="contact-val">github.com/hewgokiki</div>
+            <div class="contact-label">GitHub</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">in</div>
+          <div>
+            <div class="contact-val">linkedin.com/in/phanupong-boon/</div>
+            <div class="contact-label">LinkedIn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-icon">📋</span>
+        <span class="sec-title">Availability</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="avail-item">
+          <div class="avail-item-label">Start Date</div>
+          <div class="avail-item-val green">Within 30 days of signing</div>
+        </div>
+        <div class="avail-item">
+          <div class="avail-item-label">Expected Salary</div>
+          <div class="avail-item-val">45,000 – 50,000 THB / mo</div>
+        </div>
+        <div class="avail-item">
+          <div class="avail-item-label">Work Arrangement</div>
+          <div class="avail-item-val">Open to discuss</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Phanupong Boonyasiwapong</span> · Associate Software Engineer · Bangkok, Thailand
+  </div>
+
+</div>
+</body>
+</html>
